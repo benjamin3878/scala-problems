@@ -4,17 +4,18 @@ import scala.annotation.tailrec
 
 object BinarySearch {
 
-  def indexOf[A](a: A, arr: Array[A])(implicit ord: Ordering[A]): Option[Int] = {
+  def apply[A](a: A, arr: Array[A])(implicit ord: Ordering[A]): Option[Int] = {
+    import ord.mkOrderingOps
     @tailrec
-    def indexOf(start: Int, end: Int): Option[Int] = {
+    def apply(start: Int, end: Int): Option[Int] = {
       lazy val mid = end - start / 2
 
       if (end < start) None
       else if (arr(mid) == a) Some(mid)
-      else if (ord.compare(a, arr(end - start)) < 0) indexOf(start, mid - 1)
-      else indexOf(mid,  end)
+      else if (a < arr(mid)) apply(start, mid - 1)
+      else apply(mid,  end)
     }
 
-    if (arr.isEmpty) None else indexOf(0, arr.length - 1)
+    if (arr.isEmpty) None else apply(0, arr.length - 1)
   }
 }
