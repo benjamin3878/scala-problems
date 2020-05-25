@@ -13,21 +13,25 @@ class MissingNumberSpec extends WordSpec with Matchers {
     }
     "find the missing number in random array" in {
       Range(0, 100).foreach { _ =>
-        val (arr, missingvalue) = randomArrayMissingOne()
+        val (arr, missingValue) = randomArrayMissingOne()
         val result = MissingNumber(arr)
         try {
-          result shouldBe missingvalue
+          result shouldBe missingValue
         } catch {
-          case t: Throwable => println(s"arr=$arr, missing value=$missingvalue"); throw t
+          case t: Throwable => println(s"arr=${arr.mkString(",")}, missing value=$missingValue"); throw t
         }
       }
     }
   }
 
   def randomArrayMissingOne(): (Array[Int], Int) = {
-    val randomSortArr = RandomizeArrayInPlace((0 to 100).toArray)
+    // the element missing can't be the first or last
+    val randomSortArr = RandomizeArrayInPlace((1 to 99).toArray)
 
-    (randomSortArr.tail, randomSortArr.head)
+    // randomize again the missing element is not always in the same place
+    // add the first and last elements of the array
+    // randomSortArr.head will be the missing element
+    (0 +: RandomizeArrayInPlace(randomSortArr.tail) :+ 100, randomSortArr.head)
   }
 
 }

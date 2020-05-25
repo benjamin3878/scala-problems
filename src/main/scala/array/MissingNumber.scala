@@ -1,22 +1,20 @@
 package array
 
 /**
-  * How do you find the missing number in a given integer array of 1 to 100?
-  *
+  * How do you find the missing number in a given integer array of m to n?
+  * {m ∣ m∈Z, 0<m }
+  * {n ∣ n∈Z, m<n }
+  * There are at least 2 elements in the array.
   * This implementation assumes valid data.
   */
 object MissingNumber {
 
-  def apply(start: Int, end: Int)(array: Array[Int]): Int = {
-    val betweenStartandEnd: Int => Boolean = i => i >= start && i <= end
-    val expected = Σ(end) - Σ(start)
-    val sumBetween = array.fold(0){ case (acc, next) => if (betweenStartandEnd(next)) acc + next else acc }
+  def apply(end: Int)(array: Array[Int]): Int = MissingNumber(0, end)(array)
+  def apply(start: Int, end: Int)(array: Array[Int]): Int = MissingNumber(array.slice(start, end))
 
-    expected - sumBetween
+  def apply(array: Array[Int]): Int = {
+    def Σ(n: Int): Int = n * (n + 1) / 2
+
+    Σ(array.max) - Σ(array.min - 1) - array.sum
   }
-
-  def apply(end: Int)(array: Array[Int]): Int = apply(0, end)(array)
-  def apply(array: Array[Int]): Int = apply(0, array.length)(array)
-
-  private def Σ(n: Int): Int = n * (n + 1) / 2
 }

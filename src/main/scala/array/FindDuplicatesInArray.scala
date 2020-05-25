@@ -37,5 +37,5 @@ object FindDuplicatesInArray {
       case ((acc, _), next) => (acc, Some(next))
     }._1
 
-  def scalaStyle[A](arr: Array[A]): Set[A] = arr.groupBy(identity).collect { case (ele, ls) if ls.length > 1 => ele }.toSet
+  def scalaStyle[A](arr: Array[A]): Set[A] = arr.groupBy(identity).collect { case (ele, xs) if xs.length > 1 => ele }.toSet
 }
