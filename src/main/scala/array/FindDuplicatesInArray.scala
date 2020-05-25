@@ -4,7 +4,7 @@ import scala.collection.mutable
 import scala.math.Ordering
 
 /**
- * How do you find the duplicates a given array?
+ * How do you find the duplicates in a given array?
  */
 object FindDuplicatesInArray {
 
