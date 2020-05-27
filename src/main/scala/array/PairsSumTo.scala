@@ -1,5 +1,6 @@
 package array
 
+import scala.collection.mutable
 import scala.math.Ordering
 
 /**
@@ -7,20 +8,15 @@ import scala.math.Ordering
   */
 object PairsSumTo {
 
+  def apply(arr: Array[Int], k: Int): Set[(Int, Int)] = {
+    val (sumOfPairs, _) = arr.foldLeft((Set.empty[(Int,Int)], Map.empty[Int,Int])) {
+      case ((sumOfPairs, remainderToEle), next) if remainderToEle.contains(next) =>
+        (sumOfPairs + (remainderToEle(next) -> next), remainderToEle)
+      case ((sumOfPairs, remainderToEle), next) =>(sumOfPairs, remainderToEle + (k - next -> next))
+    }
 
-  /**
-    * This implementation returns all pairs of indices
-    * @param n value to sum to.
-    * @return
-    */
-//  def recursive[A: Numeric: Ordering](arr: Array[A], n: A): List[(Int, Int)] = {
-//    def apply(): List[(Int, Int)] = {
-//      arr.head
-//    }
-//
-//
-//    apply()
-//  }
+    sumOfPairs
+  }
 
 
 }
