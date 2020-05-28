@@ -3,7 +3,7 @@ package list
 import scala.annotation.tailrec
 
 /**
-  * How do you find the Nth element from the end in a singly linked list?
+  * How do you find the Nth element in a singly linked list?
   * zero indexed.
   */
 object NthElement {
@@ -12,7 +12,7 @@ object NthElement {
     @tailrec
     def apply(cur: List[A], acc: Option[A], count: Int): Option[A] = cur match {
       case Nil => acc
-      case head :: tail if count == Nth => Some(head)
+      case head :: _ if count == Nth => Some(head)
       case _ :: tail => apply(tail, acc, count + 1)
     }
 
